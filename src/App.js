@@ -12,29 +12,21 @@ function App() {
   const [cart, setCart] = useState([]);
 
   function addToCart(book) {
-    setCart([...cart, book]);
+    setCart([...cart, {...book, quantity: 1}]);
+  }
 
-
-    // const dupeItem = cart.find(item => +item.id === +book.id);
-    // if (dupeItem){
-    //   // dupeItem.quantity += 1;
-    //   setCart(cart.map(item => {
-    //     if (item.id === dupeItem.id){
-    //       return {
-    //         ...item,
-    //         quantity: item.quantity + 1
-    //       }
-    //     }
-    //     else {
-    //       return item;
-    //     }
-    //   }))
-    // }
-    // else {
-    //   setCart([...cart, {...book, quantity: 1}])
-    // }
-    // // console.log(dupeItem)
-    // // setCart([...cart, {...book, quantity: 1}]);
+  function changeQuantity(book, quantity){
+    setCart(cart.map((item) => {
+      if (item.id === book.id) {
+        return{
+          ...item,
+          quantity: +quantity,
+        }
+      }
+      else{
+        return item
+      }
+    }))
   }
 
   useEffect(() =>{
@@ -47,8 +39,8 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/books' element={<Books books={books}/>} />
-            <Route path='/books/:id' element={<BookInfo books={books} addToCart={addToCart}/>} />
-            <Route path='/cart' element={<Cart books={books}/>} />
+            <Route path='/books/:id' element={<BookInfo books={books} addToCart={addToCart} cart={cart}/>} />
+            <Route path='/cart' element={<Cart books={books} cart={cart} changeQuantity={changeQuantity}/>} />
           </Routes>
           <Footer />
       </div>
