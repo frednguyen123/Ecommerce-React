@@ -6,7 +6,7 @@ import Rating from './Rating';
 const Book = ({book}) => {
     const [img, setImg] = useState();
 
-    const mountedRef = useRef(false);
+    const mountedRef = useRef(true);
 
     useEffect(() => {
         const image = new Image();
@@ -20,7 +20,7 @@ const Book = ({book}) => {
         };
         return () => {
             // When the component unmounts
-            mountedRef.current = true;
+            mountedRef.current = false;
         }
     })
 
